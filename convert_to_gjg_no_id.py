@@ -3,7 +3,7 @@
 
 import xlrd
 
-wb = xlrd.open_workbook("/Users/guo/project/conver/题库/《抽考题库》普速线路工.xls")
+wb = xlrd.open_workbook("/Volumes/郭升昭/《青工比武补充题库》189道.xls")
 sheet0 = wb.sheet_by_index(0)
 
 # 获得行数和列数
@@ -17,6 +17,8 @@ def braek_topic(topic, answer):
     topic = topic.replace("(", "（")
     topic = topic.replace(")", "）")
     topic = topic.replace("（）", "（ ）")
+    topic = topic.replace("\n", "")
+    answer = answer.replace("\n", "")
     topic_list = topic.split("（ ", 1)
     # 解决没有括号的问题
     if len(topic_list) == 2:
@@ -44,15 +46,15 @@ for i in range(1, nrows):
 
     # 判断题
     if sheet0.cell_value(i, 12) == '':
-        option1 = str(sheet0.cell_value(i, 10))
-        option2 = str(sheet0.cell_value(i, 11))
+        option1 = str(sheet0.cell_value(i, 10)).replace("\n", "")
+        option2 = str(sheet0.cell_value(i, 11)).replace("\n", "")
 
         if answer == "A":
             # 写入文件
-            fo.write(str(i)+"."+topic + " (对)" + '\n\n')
+            fo.write(topic + " (对)" + '\n\n')
         else:
             # 写入文件
-            fo.write(str(i)+"."+topic + " (错)" + '\n\n')
+            fo.write(topic + " (错)" + '\n\n')
 
     # 选择题
     else:
@@ -60,14 +62,14 @@ for i in range(1, nrows):
         # 单选
         if len(answer) > 1:
 
-            option1 = str(sheet0.cell_value(i, 10))
-            option2 = str(sheet0.cell_value(i, 11))
-            option3 = str(sheet0.cell_value(i, 12))
-            option4 = str(sheet0.cell_value(i, 13))
+            option1 = str(sheet0.cell_value(i, 10)).replace("\n", "")
+            option2 = str(sheet0.cell_value(i, 11)).replace("\n", "")
+            option3 = str(sheet0.cell_value(i, 12)).replace("\n", "")
+            option4 = str(sheet0.cell_value(i, 13)).replace("\n", "")
 
             # 写入文件
             topic = braek_topic(topic, answer)
-            fo.write(str(i)+"."+topic + ' [多选题]' + '\n')
+            fo.write(topic + ' [多选题]' + '\n')
             fo.write("A." + option1 + '\n')
             fo.write("B." + option2 + '\n')
             fo.write("C." + option3 + '\n')
@@ -75,14 +77,14 @@ for i in range(1, nrows):
 
         # 多选
         else:
-            option1 = str(sheet0.cell_value(i, 10))
-            option2 = str(sheet0.cell_value(i, 11))
-            option3 = str(sheet0.cell_value(i, 12))
-            option4 = str(sheet0.cell_value(i, 13))
+            option1 = str(sheet0.cell_value(i, 10)).replace("\n", "")
+            option2 = str(sheet0.cell_value(i, 11)).replace("\n", "")
+            option3 = str(sheet0.cell_value(i, 12)).replace("\n", "")
+            option4 = str(sheet0.cell_value(i, 13)).replace("\n", "")
 
             # 写入文件
             topic = braek_topic(topic, answer)
-            fo.write(str(i)+"."+topic + ' [单选题]' + '\n')
+            fo.write(topic + ' [单选题]' + '\n')
             fo.write("A." + option1 + '\n')
             fo.write("B." + option2 + '\n')
             fo.write("C." + option3 + '\n')
